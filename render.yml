@@ -1,8 +1,0 @@
-services:
-  - type: cron
-    name: ping-bot
-    runtime: python
-    plan: free
-    schedule: "*/3 * * * *"
-    buildCommand: ""
-    startCommand: "python ping.py"

@@ -2,14 +2,21 @@ import requests
 from datetime import datetime
 import pytz
 
-RENDER_BOT_URL = "https://invbot.onrender.com"
+BOT_URL = "https://invbot.onrender.com"
 
-now = datetime.now(pytz.timezone("America/Argentina/Buenos_Aires"))
-if now.hour < 4 or now.hour >= 9:
+def main():
+    now = datetime.now(pytz.timezone("America/Argentina/Buenos_Aires"))
+    hour = now.hour
+
+    if 4 <= hour < 9:
+        print(f"[{now.strftime('%H:%M')}] Horario de suspensión – NO se envía ping.")
+        return
+
     try:
-        r = requests.get(RENDER_BOT_URL, timeout=10)
-        print(f"[{now.strftime('%H:%M')}] Ping success: {r.status_code}")
+        response = requests.get(BOT_URL, timeout=10)
+        print(f"[{now.strftime('%H:%M')}] Ping enviado. Status: {response.status_code}")
     except Exception as e:
-        print(f"[{now.strftime('%H:%M')}] Ping failed: {e}")
-else:
-    print(f"[{now.strftime('%H:%M')}] Silent window — no ping sent")
+        print(f"[{now.strftime('%H:%M')}] Error enviando ping: {e}")
+
+if __name__ == "__main__":
+    main()
