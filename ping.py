@@ -8,7 +8,7 @@ def main():
     now = datetime.now(pytz.timezone("America/Argentina/Buenos_Aires"))
     hour = now.hour
 
-    if 4 <= hour < 9:
+    if 5 <= hour < 8:
         print(f"[{now.strftime('%H:%M')}] Horario de suspensión – NO se envía ping.")
         return
 
