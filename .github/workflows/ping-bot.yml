@@ -1,25 +1,25 @@
-name: Ping Render Bot
+name: Wakeup Render Bot
 
 on:
   schedule:
-    - cron: "*/2 * * * *"   #test every 2 min
+    - cron: "50 10 * * *"   # 07:50 ART (10:50 UTC)
+    - cron: "55 10 * * *"   # 07:55 ART (10:55 UTC)
+    - cron: "0 11 * * *"    # 08:00 ART (11:00 UTC)
+    - cron: "5 11 * * *"    # 08:05 ART (11:05 UTC)
+    - cron: "10 11 * * *"   # 08:10 ART (11:10 UTC)
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Send double wakeup ping to Render
+        run: |
+          echo "[Wakeup] First ping to Render at $(date)"
+          curl -v --max-time 20 https://invbot.onrender.com/ || echo "⚠️ First ping failed"
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
+          echo "[Wakeup] Waiting 30 seconds before second ping..."
+          sleep 30
 
-      - name: Install dependencies
-        run: pip install requests pytz
-
-      - name: Run ping script
-        run: python ping.py
+          echo "[Wakeup] Second ping to Render at $(date)"
+          curl -v --max-time 20 https://invbot.onrender.com/ || echo "⚠️ Second ping failed"
