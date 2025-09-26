@@ -14,7 +14,7 @@ def main():
 
     try:
         response = requests.get(BOT_URL, timeout=30)
-        print(f"[{now.strftime('%H:%M')}] Ping enviado. Status: {response.status_code}")
+        print(f"[{now.strftime('%H:%M')}] Ping snet. Status: {response.status_code}")
     except Exception as e:
         print(f"[{now.strftime('%H:%M')}] Error enviando ping: {e}")
 
